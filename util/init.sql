@@ -1,12 +1,12 @@
-CREATE USER simplemulti WITH PASSWORD 'testing';
-CREATE USER simplemulti_ro WITH PASSWORD 'testing';
+CREATE USER ironman WITH PASSWORD '1q2w3e4r5t6y7u8i9o0p';
+CREATE USER ironman_ro WITH PASSWORD '1q2w3e4r5t6y7u8i9o0p';
 -- Production database
-DROP DATABASE IF EXISTS simplemulti;
-CREATE DATABASE simplemulti;
-GRANT ALL PRIVILEGES ON DATABASE simplemulti to simplemulti;
-GRANT ALL PRIVILEGES ON DATABASE simplemulti to simplemulti_ro;
+DROP DATABASE IF EXISTS ihash;
+CREATE DATABASE ihash;
+GRANT ALL PRIVILEGES ON DATABASE ihash to ironman;
+GRANT ALL PRIVILEGES ON DATABASE ihash to ironman_ro;
 -- Create a testing database to be different than dev
-DROP DATABASE IF EXISTS simplemulti_testing;
-CREATE DATABASE simplemulti_testing;
-GRANT ALL PRIVILEGES ON DATABASE simplemulti_testing to simplemulti;
-GRANT ALL PRIVILEGES ON DATABASE simplemulti_testing to simplemulti_ro;
+DROP DATABASE IF EXISTS ihash_testing;
+CREATE DATABASE ihash_testing;
+GRANT ALL PRIVILEGES ON DATABASE ihash_testing to ironman;
+GRANT ALL PRIVILEGES ON DATABASE ihash_testing to ironman_ro;

@@ -6,25 +6,25 @@
 ###### Pool specific info ###########
 
 # Title of the site
-site_title = "Simple Coin Multi"
+site_title = "iHash"
 
 # the FQDN
-site_url = "http://www.simplecoinmulti.com"
+site_url = "http://ihash.co"
 
 # currency the pool owner gets paid in. This currency must be configured as
 # an exchangeable currency. Additionally, the configuration guide's
 # 'Payout currency' field defaults to this currency
-pool_payout_currency = "LTC"
+pool_payout_currency = "ARCH"
 
 # Database setup
-SECRET_KEY = "somethting_really_secret"
-SQLALCHEMY_DATABASE_URI = "postgresql://<usr>:<pwd>@<url>:5432/<dbname>"
+SECRET_KEY = "stevenisTHEb3st"
+SQLALCHEMY_DATABASE_URI = "postgresql://ironman:1q2w3e4r5t6y7u8i9o0p@localhost:5432/ihash"
 
 # Log at debug level
 DEBUG = true
 
 # Signature to match your settings in the SC RPC client
-rpc_signature = "test"
+rpc_signature = "ihashandmobylovebaby"
 
 # Notify users if using a PPAgent version older than this
 latest_ppagent = [0, 3, 5]
@@ -33,59 +33,370 @@ latest_ppagent = [0, 3, 5]
 blocks_stats_page = 15
 
 # Pass exchange fees to miners if True
-charge_autoex_fees = false
+charge_autoex_fees = true
 
 # Ports/URL to show on quickstart guide
 default_stratum_port = 3333
-default_stratum_url = "stratum+tcp://"
+default_stratum_url = "stratum+tcp://stratum.ihash.co"
 
 # Payout chains
 [chains.1]
-title = "Litecoin + SYS MM"
-currencies = ["SYS", "LTC"]
+title = "Profit Switch"
+currencies = ["LTC", "SYS", "DOGE", "PTC", "ULTC", "VIA", "GRE", "POT", "GLD", "DGB", "MEC", "WDC", "42", "TAG"]
 algo = "scrypt"
-type = "pplns"
-last_n = 2
-fee_perc = "0.01"
+type = "prop"
+#last_n = 2
+fee_perc = "0.02"
+
+[chains.2]
+title = "Profit Switch"
+currencies = ["CANN", "START", "UIS", "FRAC"]
+algo = "x11"
+type = "prop"
+#last_n = 2
+fee_perc = "0.02"
+
+[chains.3]
+title = "Profit Switch"
+currencies = ["MYR", "BTC", "DGC", "NMC", "DVC", "TRC", "ACOIN", "TIT", "NEOS", "MZC"]
+algo = "sha256"
+type = "prop"
+#last_n = 2
+fee_perc = "0.02"
 
 # Server locations
-[locations.CA]
-location_acronym = "CA"
-location = "Beauharnois, Canada"
-country_flag = "/img/ca.svg"
-address = "http://localhost"
+[locations.US]
+location_acronym = "US"
+location = "Woodbridge, New Jersey"
+country_flag = "/img/us.svg"
+address = "stratum.ihash.co"
 
 # Custom currency configs
 [currencies.LTC]
 sellable = true
-buyable = true
+buyable = false
 mineable = true
-pool_payout_addr = "LbfSCZE1p9A3Yj2JK1n57kxyD2H1ZSXtNG"
+pool_payout_addr = "LQmeTUoDL4gm7Cpm9orLF6D14mRGgXtxyT"
 [currencies.LTC.coinserv]
-port = 20001
+port = 30018
 address = "127.0.0.1"
-username = "admin1"
-password = "123"
+username = "ihash"
+password = "st3v3n1s"
 
 [currencies.SYS]
 mineable = true
-pool_payout_addr = "SdzKyvhD2Y3xJvGVSfx96NXszq6x9BZX34"
+sellable = true
+pool_payout_addr = "SibZRaXC3dqC3MTDximw17eqEndhDUULbn"
 [currencies.SYS.coinserv]
-port = 19001
+port = 30019
 address = "127.0.0.1"
-username = "admin1"
-password = "123"
+username = "ihash"
+password = "st3v3n1s"
 
-# Each of these is a port which will be displayed on the configuration
-# guide & pool stats
+[currencies.BTC]
+mineable = true
+sellable = true
+buyable = true
+pool_payout_addr = "16JU8QPR4mjeockDnTEWLGhpYfAjWV9moL"
+[currencies.BTC.coinserv]
+port = 30000
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.ARCH]
+buyable = true
+pool_payout_addr = "AWZwbBhR1nSXrWRiEfEADtutGPAdBC8Sds"
+[currencies.ARCH.coinserv]
+port = 30001
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.VRC]
+buyable = true
+pool_payout_addr = "VM3EmwMAgSiBBeCCni1u6TVp2kGs4aHPBA"
+[currencies.VRC.coinserv]
+port = 30002
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.MYR]
+mineable = true
+sellable = true
+pool_payout_addr = "MRs365Sdo66boy8DQ9ez6rFcxQqJppg2qD"
+[currencies.MYR.coinserv]
+port = 30003
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.VIA]
+mineable = true
+sellable = true
+pool_payout_addr = "VvWuSGUx2oRUcfejAoiGNtZFthXE5h1nBj"
+[currencies.VIA.coinserv]
+port = 30004
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.DOGE]
+mineable = true
+sellable = true
+pool_payout_addr = "D97fjDBK8H25MrbuKyT4isH2eFKSGC8Kdj"
+[currencies.DOGE.coinserv]
+port = 30005
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.42]
+mineable = true
+sellable = true
+pool_payout_addr = "4FKypCML7mr51TMNGj2veA247UgkzMdEAx"
+[currencies.42.coinserv]
+port = 30006
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.CANN]
+mineable = true
+sellable = true
+pool_payout_addr = "CKCPbENvbGausWp7t3R3EyjQb6B2SsdWV1"
+[currencies.CANN.coinserv]
+port = 30007
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.ACOIN]
+mineable = true
+sellable = true
+pool_payout_addr = "AXCbaSSm2ynHFFu7SKe2A49gSVPKcVvNWp"
+[currencies.ACOIN.coinserv]
+port = 30008
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.CCN]
+buyable = true
+pool_payout_addr = "CZAXwBKDKw8qrbvn1McwXaEFgVRYaaBEBo"
+[currencies.CCN.coinserv]
+port = 30009
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.CSC]
+mineable = true
+sellable = true
+pool_payout_addr = "CPe5zxA1fKpQGtZ5pxcMc3kyJmBPBRT8ZN"
+[currencies.CSC.coinserv]
+port = 30010
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.DVC]
+mineable = true
+sellable = true
+pool_payout_addr = "18MkhFNTsUCtr78He1mqurJ7SfSvjModFn"
+[currencies.DVC.coinserv]
+port = 30011
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.DGB]
+mineable = true
+sellable = true
+pool_payout_addr = "DSgxhmm26KPFWt4YzZQ5Kuz7fD2wfz7g5i"
+[currencies.DGB.coinserv]
+port = 30012
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.DGC]
+mineable = true
+sellable = true
+pool_payout_addr = "D7awCXPL9wJEsFMwjWWGPvgxKMZbP2AUSJ"
+[currencies.DGC.coinserv]
+port = 30013
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.NOTE]
+mineable = true
+sellable = true
+pool_payout_addr = "DsPeaChMp11w6u39EQXryrd57wJr7MfoNW"
+[currencies.NOTE.coinserv]
+port = 30014
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.FRAC]
+mineable = true
+sellable = true
+pool_payout_addr = "FYZY2S1WgzBYAeKGzivi2scE6stZJi2vJK"
+[currencies.FRAC.coinserv]
+port = 30015
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.GLD]
+mineable = true
+sellable = true
+pool_payout_addr = "E44sfyS9t3vkQeXyj7v71GkGG9uoFBJBbF"
+[currencies.GLD.coinserv]
+port = 30016
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.GRE]
+mineable = true
+sellable = true
+pool_payout_addr = "Gb3ySoYpuogh19fMLBLoHkmvrVQ6CdPDe5"
+[currencies.GRE.coinserv]
+port = 30017
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.PTC]
+mineable = true
+sellable = true
+pool_payout_addr = "LBcjpeHAhP9kBwwSQeGPLw9CHGGy6Bh8vT"
+[currencies.PTC.coinserv]
+port = 30020
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.ULTC]
+mineable = true
+sellable = true
+pool_payout_addr = "UYBNaMFD8MULTmUTt8CoCuMBPYdBjrmUrG"
+[currencies.ULTC.coinserv]
+port = 30021
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.POT]
+mineable = true
+sellable = true
+pool_payout_addr = "PRVkBTaCk2vv9p6goax79AxUkQVN1uQjq5"
+[currencies.POT.coinserv]
+port = 30022
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.START]
+mineable = true
+sellable = true
+pool_payout_addr = "sLvhqNZV3wL3MqCEh5FBjTAEJG6ghacZUB"
+[currencies.START.coinserv]
+port = 30023
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.UIS]
+mineable = true
+sellable = true
+pool_payout_addr = "UdALDgsQsNqF2b8tRUt2KWrqGDrKkxqoQJ"
+[currencies.UIS.coinserv]
+port = 30024
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.NMC]
+mineable = true
+sellable = true
+pool_payout_addr = "N8SmG2TWyM47v7syQ8hDJscPmG9npC7nKo"
+[currencies.NMC.coinserv]
+port = 30025
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.TAG]
+mineable = true
+sellable = true
+pool_payout_addr = "TMv9HhYWRagF2kUnyWtMKqDNn1iPUqZ6ju"
+[currencies.TAG.coinserv]
+port = 30026
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+[currencies.TRC]
+mineable = true
+sellable = true
+pool_payout_addr = "13BQS6jyUR49q51ioonCV9JHxCTPgC3k2q"
+[currencies.TRC.coinserv]
+port = 30032
+address = "127.0.0.1"
+username = "ihash"
+password = "st3v3n1s"
+
+
+# Mining Servers
 [mining_servers.1]
-address = "localhost"
-# The [stratum] part of the monitor address must match the key you
-# use in PP for the stratum server
-monitor_address = "http://localhost:3855/stratum"
+address = "stratum.ihash.co"
+monitor_address = "http://localhost:3855/PROFIT_SWITCH_3333"
 port = 3333
-location = "CA"
-# diff can be set to any string, ie - for a vardiff port you may want 
-# something like: diff = "8-256"
-diff = 1
+location = "US"
+diff = "8 - 8192"
 chain = 1
+
+[mining_servers.2]
+address = "stratum.ihash.co"
+monitor_address = "http://localhost:3855/PROFIT_SWITCH_3334"
+port = 3334
+location = "US"
+diff = 8192
+chain = 1
+
+[mining_servers.3]
+address = "stratum.ihash.co"
+monitor_address = "http://localhost:3855/PROFIT_SWITCH_4333"
+port = 4333
+location = "US"
+diff = "0.00039 - 8"
+chain = 2
+
+[mining_servers.4]
+address = "stratum.ihash.co"
+monitor_address = "http://localhost:3855/PROFIT_SWITCH_4334"
+port = 4334
+location = "US"
+diff = 4
+chain = 2
+
+[mining_servers.5]
+address = "stratum.ihash.co"
+monitor_address = "http://localhost:3855/PROFIT_SWITCH_5333"
+port = 5333
+location = "US"
+diff = "8 - 32768"
+chain = 3
+
+[mining_servers.6]
+address = "stratum.ihash.co"
+monitor_address = "http://localhost:3855/PROFIT_SWITCH_5334"
+port = 5334
+location = "US"
+diff = 4096
+chain = 3
