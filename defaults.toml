@@ -11,7 +11,7 @@ site_url = "http://ihash.co"
 # host for static assets e.g. {assets_address}/css/main.css
 assets_address = "/static"
 # logo img
-logo = "/img/logo.png"
+logo = "/img/ihash_transparent.png"
 site_meta_desc = "A custom mining pool with automatic exchanging between currencies, no registration, and a focus on developing new tools for miners"
 # Default values for new miner config
 default_stratum_url = "stratum+tcp://stratum.ihash.co"
