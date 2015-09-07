@@ -3,6 +3,7 @@ import itertools
 import datetime
 from pprint import pprint
 import time
+from requests import ConnectionError
 import simplejson as json
 import urllib3
 import sqlalchemy
@@ -57,13 +58,17 @@ def crontab(func, *args, **kwargs):
                                  exc_info=True)
 
     t = time.time() - t
-    cache.set('cron_last_run_{}'.format(func.__name__),
-              dict(runtime=t, time=int(time.time())))
+
+    # Update data for viewing in the /crontabs view
+    key_name = 'cron_last_run_{}'.format(func.__name__)
+    cache.cache._client.hmset(
+        key_name, dict(runtime=t, time=int(time.time())))
+    cache.cache._client.expire(key_name, 86400)
     return res
 
 
-@crontab
 @SchedulerCommand.option('-ds', '--dont-simulate', default=False, action="store_true")
+@crontab
 def credit_cleanup(days_ago=7, batch_size=10000, sleep=1, dont_simulate=True):
     objs_count = 100
     while objs_count:
@@ -96,8 +101,8 @@ def credit_cleanup(days_ago=7, batch_size=10000, sleep=1, dont_simulate=True):
         time.sleep(sleep)
 
 
-@crontab
 @SchedulerCommand.option('-ds', '--dont-simulate', default=False, action="store_true")
+@crontab
 def share_cleanup(dont_simulate=True):
     """ Runs chain_cleanup on each chain. """
     for chain in chains.itervalues():
@@ -210,8 +215,8 @@ def chain_cleanup(chain, dont_simulate):
             .format(deleted_count, oldest_kept, index))
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def cache_profitability():
     """
     Calculates the profitability from recent blocks
@@ -273,8 +278,8 @@ def cache_profitability():
                   btc_per, timeout=3600 * 8)
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def update_online_workers():
     """
     Grabs data on all currently connected clients. Forms a dictionary of this form:
@@ -285,7 +290,7 @@ def update_online_workers():
     for ppid, powerpool in powerpools.iteritems():
         try:
             data = powerpool.request('clients/')
-        except RemoteException:
+        except (RemoteException, ConnectionError):
             current_app.logger.warn("Unable to connect to PP {} to gather worker summary."
                                     .format(powerpool.full_info()), exc_info=True)
             continue
@@ -304,8 +309,8 @@ def update_online_workers():
     cache.set_many(users, timeout=660)
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def cache_user_donation():
     """
     Grab all user donations and loop through them then cache donation %
@@ -320,8 +325,8 @@ def cache_user_donation():
     cache.set('user_donations', user_donations, timeout=1440 * 60)
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def create_payouts():
     """
     Groups payable payouts at the end of the day by currency for easier paying
@@ -391,8 +396,8 @@ def create_payouts():
     db.session.commit()
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def create_trade_req(typ):
     """
     Takes all the credits in need of exchanging (either buying or selling, not
@@ -460,8 +465,8 @@ def create_trade_req(typ):
     db.session.commit()
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def leaderboard():
     users = {}
     lower_10, upper_10 = make_upper_lower(offset=datetime.timedelta(minutes=2))
@@ -547,8 +552,8 @@ def update_network():
                   timeout=1200)
 
 
-@crontab
 @SchedulerCommand.option("-b", "--block-id", type=int, dest="block_id")
+@crontab
 def update_block_state(block_id=None):
     """
     Loops through blocks (default immature and non-orphaned blocks)
@@ -569,7 +574,7 @@ def update_block_state(block_id=None):
                 current_app.logger.error(
                     "Unable to communicate with {} RPC server: {}"
                     .format(currency.key, e))
-                return None
+                heights[currency.key] = None
         return heights[currency.key]
 
     # Select immature & non-orphaned blocks if none are passed
@@ -594,7 +599,7 @@ def update_block_state(block_id=None):
         if not blockheight:
             current_app.logger.warn("Skipping block state update because we "
                                     "failed trying to poll the RPC!")
-            break
+            continue
 
         # Skip checking if height difference isn't sufficient. Avoids polling
         # the RPC server excessively
@@ -645,8 +650,8 @@ def update_block_state(block_id=None):
         db.session.commit()
 
 
-@crontab
 @SchedulerCommand.option('-ds', '--dont-simulate', default=False, action="store_true")
+@crontab
 def generate_credits(dont_simulate=True):
     """ Loops through all the blocks that haven't been credited out and
     attempts to process them """
@@ -1007,8 +1012,8 @@ def credit_block(redis_key, simulate=False):
         db.session.rollback()
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def collect_ppagent_data():
     """ Grabs all the pending ppagent data points """
     _grab_data("temp_*", "temperature")
@@ -1065,8 +1070,8 @@ def _grab_data(prefix, stat):
         redis_conn.delete(proc_name)
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def collect_minutes():
     """ Grabs all the pending minute shares out of redis and puts them in the
     database """
@@ -1118,8 +1123,8 @@ def collect_minutes():
         redis_conn.delete("processing_shares")
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def compress_slices():
     for chain in chains.itervalues():
         # Get the index of the last inserted share slice on this chain
@@ -1222,24 +1227,24 @@ def compress_slices():
                     float(original_size) / (encoded_size or 1)))
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def compress_minute():
     ShareSlice.compress(0)
     DeviceSlice.compress(0)
     db.session.commit()
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def compress_five_minute():
     ShareSlice.compress(1)
     DeviceSlice.compress(1)
     db.session.commit()
 
 
-@crontab
 @SchedulerCommand.command
+@crontab
 def server_status():
     """
     Periodically poll the backend to get number of workers and other general
@@ -1279,7 +1284,7 @@ def server_status():
             algo_miners.setdefault(powerpool.chain.algo.key, 0)
             algo_miners[powerpool.chain.algo.key] += data['address_count']
 
-            if 'last_flush_job' in data and data['last_flush_job'] \
+            if data and 'last_flush_job' in data and data['last_flush_job'] \
                     and 'currency' in data['last_flush_job']:
                 curr = data['last_flush_job']['currency']
                 servers[powerpool.key].update({'currently_mining': curr})
